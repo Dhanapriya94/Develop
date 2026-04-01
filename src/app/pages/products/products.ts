@@ -12,9 +12,9 @@ import { Product } from '../../models/product';
 })
 export class ProductsComponent {
 
-  readonly products$;
-  readonly loading$;
-  readonly error$;
+  products$;
+  loading$;
+  error$;
 
   newProduct: Product = {
     id: 0,
@@ -24,19 +24,27 @@ export class ProductsComponent {
   };
 
   editMode = false;
+  nameError = false; // ✅ validation flag
 
   constructor(private facade: ProductsFacade) {
-    this.products$ = this.facade.products$;
+      this.products$ = this.facade.products$;
   this.loading$ = this.facade.loading$;
   this.error$ = this.facade.error$;
   }
-
-  onSearch(event: Event) {
-    const value = (event.target as HTMLInputElement).value;
-    this.facade.setSearch(value);
-  }
-
+onSearch(event: Event) {
+  const value = (event.target as HTMLInputElement).value;
+  this.facade.setSearch(value);
+}
   addProduct() {
+
+    // ✅ VALIDATION
+    if (!this.newProduct.name || this.newProduct.name.trim() === '') {
+      this.nameError = true;
+      return;
+    }
+
+    this.nameError = false;
+
     this.facade.addProduct({
       ...this.newProduct,
       id: Date.now()
@@ -51,6 +59,13 @@ export class ProductsComponent {
   }
 
   updateProduct() {
+    if (!this.newProduct.name || this.newProduct.name.trim() === '') {
+      this.nameError = true;
+      return;
+    }
+
+    this.nameError = false;
+
     this.facade.updateProduct(this.newProduct);
     this.resetForm();
   }
@@ -62,5 +77,6 @@ export class ProductsComponent {
   resetForm() {
     this.newProduct = { id: 0, name: '', price: 0, stock: 0 };
     this.editMode = false;
+    this.nameError = false;
   }
 }
