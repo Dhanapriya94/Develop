@@ -1,0 +1,38 @@
+<nz-layout style="width: 100%">
+  <nz-content>
+    <div nz-row nzJustify="center" nzAlign="middle" style="height: 100vh">
+      <div nz-col [nzXs]="24" [nzSm]="18" [nzMd]="12" [nzLg]="8">
+        <nz-card nzTitle="Login">
+          <form [formGroup]="form" (ngSubmit)="submit()">
+            <!-- USERNAME -->
+            <nz-form-item>
+              <nz-form-label [nzSpan]="24" nzRequired>Username</nz-form-label>
+
+              <nz-form-control [nzSpan]="24" nzErrorTip="Username is required">
+                <nz-input-group nzPrefixIcon="user">
+                  <input nz-input formControlName="username" />
+                </nz-input-group>
+              </nz-form-control>
+            </nz-form-item>
+
+            <!-- PASSWORD -->
+            <nz-form-item>
+              <nz-form-label [nzSpan]="24" nzRequired>Password</nz-form-label>
+
+              <nz-form-control [nzSpan]="24" nzErrorTip="Password is required">
+                <nz-input-group nzPrefixIcon="eye">
+                  <input nz-input type="password" formControlName="password" />
+                </nz-input-group>
+              </nz-form-control>
+            </nz-form-item>
+
+            <!-- BUTTON -->
+            <button nz-button nzType="primary" htmlType="submit" nzBlock [disabled]="form.invalid">
+              Login
+            </button>
+          </form>
+        </nz-card>
+      </div>
+    </div>
+  </nz-content>
+</nz-layout>
