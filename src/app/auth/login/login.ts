@@ -31,6 +31,7 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
 
 export class LoginComponent {
   form;
+  passwordVisible = false;
 
   constructor(
     private fb: FormBuilder,
