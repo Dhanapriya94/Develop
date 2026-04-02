@@ -10,6 +10,7 @@
         <nz-card style="padding: 20px; border-radius: 8px">
           <form [formGroup]="form" (ngSubmit)="submit()">
             <nz-form-item>
+              <nz-form-label [nzSpan]="24" nzRequired>Username</nz-form-label>
               <nz-form-control>
                 <nz-input-group nzSize="large" nzPrefixIcon="user">
                   <input nz-input formControlName="username" placeholder="Username" />
@@ -18,17 +19,27 @@
             </nz-form-item>
 
             <nz-form-item>
+              <nz-form-label [nzSpan]="24" nzRequired>Password</nz-form-label>
               <nz-form-control>
-                <nz-input-group nzSize="large" nzPrefixIcon="eye">
+                <nz-input-group nzSize="large" [nzPrefix]="suffixIcon">
                   <input
                     nz-input
-                    type="password"
+                    [type]="passwordVisible ? 'text' : 'password'"
                     formControlName="password"
                     placeholder="Password"
                   />
                 </nz-input-group>
               </nz-form-control>
             </nz-form-item>
+
+            <ng-template #suffixIcon>
+              <span
+                nz-icon
+                [nzType]="passwordVisible ? 'eye' : 'eye-invisible'"
+                (click)="passwordVisible = !passwordVisible"
+                style="cursor: pointer"
+              ></span>
+            </ng-template>
 
             <button nz-button nzType="primary" nzSize="large" htmlType="submit" nzBlock>
               Login
