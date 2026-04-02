@@ -1,0 +1,40 @@
+<nz-card nzTitle="Orders">
+
+  <nz-table
+    #orderTable
+    [nzData]="orders"
+    [nzBordered]="true"
+    [nzPageSize]="5"
+  >
+
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Customer</th>
+        <th>Amount</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let o of orderTable.data">
+        <td>#{{ o.id }}</td>
+        <td>{{ o.customer }}</td>
+        <td>₹{{ o.amount }}</td>
+
+        <td>
+          <nz-tag [nzColor]="getStatusColor(o.status)">
+            {{ o.status }}
+          </nz-tag>
+        </td>
+
+        <td>
+          <button nz-button nzType="link">View</button>
+        </td>
+      </tr>
+    </tbody>
+
+  </nz-table>
+
+</nz-card>
