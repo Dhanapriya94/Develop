@@ -1,0 +1,106 @@
+<nz-card nzTitle="Orders">
+  <!-- 🔹 FILTER BAR -->
+  <div style="display: flex; gap: 12px; margin-bottom: 16px">
+    <input
+      nz-input
+      placeholder="Search by customer or ID"
+      style="width: 250px"
+      (input)="onSearch($event)"
+    />
+
+    <nz-select
+      style="width: 180px"
+      [ngModel]="statusFilter()"
+      (ngModelChange)="onStatusFilterChange($event)"
+    >
+      <nz-option nzValue="All" nzLabel="All"></nz-option>
+      <nz-option nzValue="Pending" nzLabel="Pending"></nz-option>
+      <nz-option nzValue="Shipped" nzLabel="Shipped"></nz-option>
+      <nz-option nzValue="Delivered" nzLabel="Delivered"></nz-option>
+    </nz-select>
+  </div>
+
+  <!-- 🔹 TABLE -->
+  <nz-table [nzData]="orders()" [nzBordered]="true" [nzPageSize]="5">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Customer</th>
+        <th>Amount</th>
+        <th>Status</th>
+        <th style="width: 220px">Action</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let o of orders(); trackBy: trackById">
+        <td>#{{ o.id }}</td>
+        <td>{{ o.customer }}</td>
+        <td>₹{{ o.amount }}</td>
+
+        <!-- STATUS TAG -->
+        <td>
+          <nz-tag [nzColor]="statusColorMap[o.status]">
+            {{ o.status }}
+          </nz-tag>
+        </td>
+
+        <!-- 🔥 ACTION COLUMN -->
+        <td>
+          <div style="display: flex; gap: 8px; align-items: center">
+            <!-- STATUS UPDATE -->
+            <nz-select
+              style="width: 120px"
+              nzSize="small"
+              [ngModel]="o.status"
+              (ngModelChange)="updateStatus(o, $event)"
+            >
+              <nz-option nzValue="Pending" nzLabel="Pending"></nz-option>
+              <nz-option nzValue="Shipped" nzLabel="Shipped"></nz-option>
+              <nz-option nzValue="Delivered" nzLabel="Delivered"></nz-option>
+            </nz-select>
+
+            <!-- INFO BUTTON -->
+            <button
+              nz-button
+              nzType="text"
+              nzShape="circle"
+              nz-tooltip
+              nzTooltipTitle="detail"
+              nzTooltipPlacement="bottom"
+              (click)="openOrder(o)"
+            >
+              <i nz-icon nzType="info-circle" nz-Theme="outline"></i>
+            </button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+</nz-card>
+
+<!-- 🔥 DRAWER -->
+<nz-drawer
+  [nzVisible]="drawerVisible()"
+  nzTitle="Order Details"
+  nzPlacement="right"
+  [nzWidth]="400"
+  (nzOnClose)="closeDrawer()"
+>
+  <!-- ✅ IMPORTANT: use VM -->
+  <ng-container *nzDrawerContent>
+    <ng-container *ngIf="selectedOrder() as order">
+      <p><strong>Order ID:</strong> #{{ order.id }}</p>
+      <p><strong>Customer:</strong> {{ order.customer }}</p>
+      <p><strong>Amount:</strong> {{ order.formattedAmount }}</p>
+
+      <p>
+        <strong>Status:</strong>
+        <nz-tag [nzColor]="statusColorMap[order.status]">
+          {{ order.status }}
+        </nz-tag>
+      </p>
+    </ng-container>
+  </ng-container>
+</nz-drawer>
+<!-- 🔥 DRAWER -->

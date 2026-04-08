@@ -1,0 +1,76 @@
+<div class="dashboard-container">
+
+  <!-- 🔹 FILTER -->
+  <div class="filter-bar">
+    <nz-segmented
+      [nzOptions]="[
+        { label: 'Today', value: 'today' },
+        { label: 'Week', value: 'week' },
+        { label: 'Month', value: 'month' }
+      ]"
+      [ngModel]="filter()"
+      (ngModelChange)="onFilterChange($event)"
+    ></nz-segmented>
+  </div>
+
+  <!-- 🔹 LOADING -->
+  <div *ngIf="loading(); else content">
+    <nz-skeleton [nzActive]="true" [nzParagraph]="{ rows: 4 }"></nz-skeleton>
+  </div>
+
+  <!-- 🔹 CONTENT -->
+  <ng-template #content>
+
+    <!-- KPI -->
+    <div nz-row [nzGutter]="16" class="mt-16">
+      <div nz-col nzSpan="6" *ngFor="let s of stats()">
+        <nz-card class="kpi-card">
+          <p class="kpi-title">{{ s.title }}</p>
+          <h2 class="kpi-value">{{ s.value }}</h2>
+        </nz-card>
+      </div>
+    </div>
+
+    <!-- Charts -->
+    <div nz-row [nzGutter]="16" class="mt-16">
+      <div nz-col nzSpan="12">
+        <nz-card nzTitle="Sales Overview">
+          <div echarts [options]="salesChart()" class="chart"></div>
+        </nz-card>
+      </div>
+
+      <div nz-col nzSpan="12">
+        <nz-card nzTitle="Category Distribution">
+          <div echarts [options]="categoryChart" class="chart"></div>
+        </nz-card>
+      </div>
+    </div>
+
+    <!-- Orders -->
+    <div class="mt-16">
+      <nz-card nzTitle="Recent Orders">
+        <nz-table [nzData]="orders()" [nzBordered]="true">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>User</th>
+              <th>Amount</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let o of orders()">
+              <td>{{ o.id }}</td>
+              <td>{{ o.user }}</td>
+              <td>₹{{ o.amount }}</td>
+              <td>{{ o.status }}</td>
+            </tr>
+          </tbody>
+        </nz-table>
+      </nz-card>
+    </div>
+
+  </ng-template>
+
+</div>

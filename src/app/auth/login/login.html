@@ -1,0 +1,59 @@
+<nz-layout style="width: 100%; height: 100vh">
+  <nz-content>
+    <div nz-row nzJustify="center" nzAlign="middle" style="height: 100%">
+      <div nz-col [nzXs]="24" [nzSm]="20" [nzMd]="14" [nzLg]="10" [nzXl]="8">
+        <div style="text-align: center; margin-bottom: 20px">
+          <h2 style="margin: 0">E-Commerce Admin</h2>
+          <p style="margin: 0; color: gray">Sign in to continue</p>
+        </div>
+
+        <nz-card style="padding: 20px; border-radius: 8px">
+          <form [formGroup]="form" (ngSubmit)="submit()">
+            <nz-form-item>
+              <nz-form-label [nzSpan]="24" nzRequired>Username</nz-form-label>
+              <nz-form-control>
+                <nz-input-group nzSize="large" nzPrefixIcon="user">
+                  <input nz-input formControlName="username" placeholder="Username" />
+                </nz-input-group>
+              </nz-form-control>
+            </nz-form-item>
+
+            <nz-form-item>
+              <nz-form-label [nzSpan]="24" nzRequired>Password</nz-form-label>
+              <nz-form-control>
+                <nz-input-group nzSize="large" [nzPrefix]="suffixIcon">
+                  <input
+                    nz-input
+                    [type]="passwordVisible ? 'text' : 'password'"
+                    formControlName="password"
+                    placeholder="Password"
+                  />
+                </nz-input-group>
+              </nz-form-control>
+            </nz-form-item>
+
+            <ng-template #suffixIcon>
+              <span
+                nz-icon
+                [nzType]="passwordVisible ? 'eye' : 'eye-invisible'"
+                (click)="passwordVisible = !passwordVisible"
+                style="cursor: pointer"
+              ></span>
+            </ng-template>
+
+           <button
+  nz-button
+  nzType="primary"
+  nzSize="large"
+  htmlType="submit"
+  nzBlock
+  [nzLoading]="loading"
+>
+  Login
+</button>
+          </form>
+        </nz-card>
+      </div>
+    </div>
+  </nz-content>
+</nz-layout>

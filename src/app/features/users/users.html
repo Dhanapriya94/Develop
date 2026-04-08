@@ -1,0 +1,66 @@
+<nz-card nzTitle="Users">
+
+  <!-- 🔍 Filters -->
+  <div style="display:flex; gap:12px; margin-bottom:16px;">
+    
+    <input
+      nz-input
+      placeholder="Search users..."
+      [(ngModel)]="searchValue"
+      (ngModelChange)="onSearch($event)"
+      style="width: 250px"
+    />
+
+    <nz-select
+      placeholder="Filter by role"
+      [(ngModel)]="selectedRole"
+      (ngModelChange)="onRoleChange($event)"
+      style="width: 180px"
+      nzAllowClear
+    >
+      <nz-option nzValue="Admin" nzLabel="Admin"></nz-option>
+      <nz-option nzValue="Customer" nzLabel="Customer"></nz-option>
+    </nz-select>
+
+  </div>
+
+  <!-- 📊 Table -->
+  <nz-table
+    #userTable
+    [nzData]="facade.users()"
+    [nzBordered]="true"
+    [nzLoading]="facade.loading()"
+    [nzPageSize]="5"
+  >
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let u of userTable.data">
+        <td>#{{ u.id }}</td>
+        <td>{{ u.name }}</td>
+        <td>{{ u.email }}</td>
+
+        <td>
+          <nz-tag [nzColor]="getRoleColor(u.role)">
+            {{ u.role }}
+          </nz-tag>
+        </td>
+
+        <td>
+          <nz-tag [nzColor]="u.status === 'Active' ? 'green' : 'default'">
+            {{ u.status }}
+          </nz-tag>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+
+</nz-card>

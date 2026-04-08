@@ -1,0 +1,154 @@
+<nz-card nzTitle="Products">
+  <div style="display: flex; justify-content: space-between; margin-bottom: 16px">
+    <input nz-input placeholder="Search..." (input)="onSearch($event)" style="width: 300px" />
+    <button nz-button nzType="primary" (click)="openAddModal()">+ Add Product</button>
+  </div>
+
+  <nz-spin *ngIf="loading$ | async"></nz-spin>
+
+  <div *ngIf="error$ | async as error" style="color: red; margin-bottom: 10px">
+    {{ error }}
+  </div>
+
+  <nz-table
+    #basicTable
+    [nzData]="(products$ | async) || []"
+    [nzBordered]="true"
+    [nzSize]="'middle'"
+    [nzPageSize]="5"
+    [nzShowPagination]="true"
+  >
+   <thead>
+  <tr>
+    <th nzWidth="80px">Image</th>
+    <th>Name</th>
+    <th>Category</th>
+    <th>Price</th>
+    <th>Stock</th>
+    <th>Status</th>
+    <th nzWidth="150px">Action</th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr *ngFor="let p of basicTable.data; trackBy: trackById">
+    
+    <!-- Image -->
+     <td>
+  <ng-container *ngIf="!p.image || imageErrorMap.get(p.id); else showImage">
+    <nz-avatar nzIcon="shopping" nzShape="square"></nz-avatar>
+  </ng-container>
+
+  <ng-template #showImage>
+    <img
+      [src]="p.image"
+      (error)="onImageError(p)"
+      width="40"
+      height="40"
+      style="border-radius: 6px"
+    />
+  </ng-template>
+    </td>
+
+    <!-- Name -->
+    <td>{{ p.name }}</td>
+
+    <!-- Category -->
+    <td>{{ p.category || 'General' }}</td>
+
+    <!-- Price -->
+    <td>₹{{ p.price }}</td>
+
+    <!-- Stock -->
+    <td>
+      <span [style.color]="p.stock < 10 ? 'red' : 'inherit'">
+        {{ p.stock }}
+      </span>
+    </td>
+
+    <!-- Status -->
+    <td>
+     <nz-switch
+  [ngModel]="p.active"
+  (ngModelChange)="toggleStatus(p)"
+  nzCheckedChildren=""
+  nzUnCheckedChildren=""
+></nz-switch>
+    </td>
+
+    <!-- Actions -->
+    <td>
+      <button nz-button nzType="link" (click)="editProduct(p)">Edit</button>
+      <button nz-button nzDanger (click)="deleteProduct(p.id)">Delete</button>
+    </td>
+
+  </tr>
+</tbody>
+  </nz-table>
+</nz-card>
+
+<nz-modal
+  [(nzVisible)]="isModalVisible"
+  [nzTitle]="isEditMode ? 'Edit Product' : 'Add Product'"
+  (nzOnCancel)="handleCancel()"
+  (nzOnOk)="handleOk()"
+>
+  <ng-container *nzModalContent>
+    <form nz-form nzLayout="vertical">
+      <div nz-row [nzGutter]="16">
+        <div nz-col [nzSpan]="24">
+          <nz-form-item>
+            <nz-form-label [nzRequired]="true">Product Name</nz-form-label>
+            <nz-form-control
+              [nzValidateStatus]="nameError ? 'error' : ''"
+              nzErrorTip="Product name is required"
+            >
+              <input
+                nz-input
+                placeholder="Enter product name"
+                [(ngModel)]="newProduct.name"
+                name="name"
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label [nzRequired]="true">Price</nz-form-label>
+            <nz-form-control
+              [nzValidateStatus]="priceError ? 'error' : ''"
+              nzErrorTip="Price must be greater than 0"
+            >
+              <input
+                nz-input
+                type="number"
+                placeholder="Enter price"
+                [(ngModel)]="newProduct.price"
+                name="price"
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div nz-col [nzSpan]="12">
+          <nz-form-item>
+            <nz-form-label>Stock</nz-form-label>
+            <nz-form-control
+              [nzValidateStatus]="stockError ? 'error' : ''"
+              nzErrorTip="Stock cannot be negative"
+            >
+              <input
+                nz-input
+                type="number"
+                placeholder="Enter stock"
+                [(ngModel)]="newProduct.stock"
+                name="stock"
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+    </form>
+  </ng-container>
+</nz-modal>
