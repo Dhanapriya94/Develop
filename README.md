@@ -70,6 +70,7 @@ https://dhanapriya-dahsboard-2026.vercel.app/login
 - Reusable components and services
 - Sidebar-based navigation layout
 - Responsive UI using NG-ZORRO
+- Handled loading states and error handling for better user experience
 
 ---
 
@@ -85,7 +86,7 @@ src/app/
 ## ⚡ Performance Optimizations
 - OnPush change detection strategy
 - Lazy loading of feature modules
-- Efficient RxJS usage (debounceTime, switchMap, shareReplay)
+- Efficient RxJS usage
 - trackBy function in ngFor to reduce DOM re-rendering
 
 ---
