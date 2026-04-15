@@ -1,59 +1,133 @@
-# DashboardApp
+# Angular E-Commerce Admin Dashboard
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.0.
+## 📌 Overview
+This is a scalable e-commerce admin dashboard built using Angular, designed to manage products, users, and orders with a clean and modular architecture.
 
-## Development server
+The application provides a complete admin workflow starting from authentication to dashboard analytics and management modules, reflecting real-world enterprise frontend practices.
 
-To start a local development server, run:
+---
 
-```bash
-ng serve
-```
+## 🌐 Live Demo
+https://dhanapriya-dahsboard-2026.vercel.app/login
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+---
 
-## Code scaffolding
+## 🛠 Tech Stack
+- Angular 17+
+- TypeScript
+- RxJS
+- NG-ZORRO (UI Library)
+- HTML / CSS
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+---
 
-```bash
-ng generate component component-name
-```
+## 🚀 Features
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+### 🔐 Authentication
+- Secure login and logout functionality
+- Route guards for protected navigation
+- Session-based access control
 
-```bash
-ng generate --help
-```
+---
 
-## Building
+### 📊 Dashboard (Main Dashboard)
+- KPI cards (Revenue, Orders, Customers, Products)
+- Sales Overview chart (weekly trend)
+- Category Distribution pie chart
+- Recent Orders table with status tracking
+- Time-based filter (Today / Week / Month)
 
-To build the project run:
+---
 
-```bash
-ng build
-```
+### 🛍️ Products Module
+- Product grid view
+- Add product form (Reactive Forms)
+- Edit product functionality
+- Delete product option
+- Search and basic filtering
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+---
 
-## Running unit tests
+### 📦 Orders Module
+- Orders grid view
+- Order update/edit functionality
+- Delete order option
+- Displays order details (user, amount, status)
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+---
 
-```bash
-ng test
-```
+### 👤 Users Module
+- Users grid view
+- Displays user details
+- Structured listing for management
 
-## Running end-to-end tests
+---
 
-For end-to-end (e2e) testing, run:
+## ⚙️ Core Features
+- Reactive forms with validation
+- Modular architecture (Core, Shared, Feature modules)
+- REST API integration
+- Reusable components and services
+- Sidebar-based navigation layout
+- Responsive UI using NG-ZORRO
 
-```bash
-ng e2e
-```
+---
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+## 📂 Project Structure
 
-## Additional Resources
+src/app/
+  core/        → Authentication, services, interceptors  
+  shared/      → Reusable components, pipes, directives  
+  features/    → Dashboard, products, orders, users modules  
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+---
+
+## ⚡ Performance Optimizations
+- OnPush change detection strategy
+- Lazy loading of feature modules
+- Efficient RxJS usage (debounceTime, switchMap, shareReplay)
+- trackBy function in ngFor to reduce DOM re-rendering
+
+---
+
+## ▶️ How to Run
+
+npm install  
+ng serve  
+
+Then open: http://localhost:4200/
+
+---
+
+## 📸 Screenshots
+
+The following screenshots demonstrate key modules of the application:
+
+### 🔐 Login Page
+![Login](./screenshots/login.png)
+
+### 📊 Dashboard (Main Dashboard)
+![Dashboard](./screenshots/dashboard.png)
+
+### 🛍️ Products Module
+![Products](./screenshots/products.png)
+
+### 📦 Orders Module
+![Orders](./screenshots/orders.png)
+
+### 👤 Users Module
+![Users](./screenshots/users.png)
+
+---
+
+## 🎯 Key Highlights
+- Clean and professional admin dashboard UI  
+- Covers complete admin workflow (login → dashboard → modules)  
+- Includes data visualization (charts and analytics)  
+- Built using scalable Angular architecture  
+- Focused on performance, maintainability, and user experience  
+
+---
+
+## 📌 Purpose
+This project demonstrates real-world Angular application development, including dashboard design, modular architecture, CRUD operations, and performance optimization.
