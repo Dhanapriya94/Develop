@@ -104,7 +104,7 @@ Then open: http://localhost:4200/
 The following screenshots demonstrate key modules of the application:
 
 ### 🔐 Login Page
-![Login](./screenshots/login.png)
+![Login](./screenshots/login.PNG)
 
 ### 📊 Dashboard (Main Dashboard)
 ![Dashboard](./screenshots/dashboard.png)
